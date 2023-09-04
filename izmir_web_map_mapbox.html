@@ -1,0 +1,286 @@
+0<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tarihi İzmir Haritaları</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+
+
+	body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; } 
+	
+	 #menu {
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        right: 10px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+	
+	#menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+    }
+
+    #menu a.active:hover {
+        background: #3074a4;
+    }
+
+
+	
+    .map-overlay {
+        font: bold 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        position: absolute;
+        width: 15%;
+		height:100%; 
+        top: 0;
+        left: 0;
+        padding: 10px;
+		background-color: #CACFD2;
+    }
+
+    .map-overlay .map-overlay-inner {
+        background-color: #CACFD2;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .map-overlay label {
+        display: block;
+        margin: 0 0 10px;
+    }
+
+    .map-overlay input {
+        background-color: transparent;
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        margin: 0;
+        cursor: absolute;
+    }
+</style>
+
+<nav id= "menu"></nav>
+
+<div id="map"></div>
+
+
+<div class="map-overlay top">
+    <div class="map-overlay-inner">
+        <label>Thomas Graves, 1836: <span id="slider-value">100%</span></label>
+        <input id="slider" type="range" min="0" max="100" step="0" value="100">
+		<button onclick="showLayer()">Show</button>
+        <button onclick="hideLayer()">Close</button>
+		
+    </div>
+<div class="slider_uc">
+<div class="map-overlay-inner">
+			<label>Lamec Saad, 1876: <span id="slider-value2">100%</span></label>
+                <input id="slider2" type="range" min="0" max="100" step="0" value="100">
+				<button onclick="showLayer1() ">Show</button>
+                 <button onclick="hideLayer1()">Close</button>
+            </div>
+<div class="slider_iki">
+        <div class="map-overlay-inner">
+            <label>Wagner and Debes, 1905: <span id="slider-value3">100%</span></label>
+            <input id="slider3" type="range" min="0" max="100" step="0" value="100">
+			<button onclick="showLayer2() ">Show</button>
+            <button onclick="hideLayer2()">Close</button>
+        </div>
+
+</div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiYWxwZXJhc2lubWF6IiwiYSI6ImNrcGJwaTE4eDE2YWcyb3A3YTl3MDNrYnYifQ.ig_UvxIWLsWaRXyFNjFGwA';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/alperasinmaz/ckx7y26j198e614pcwwt69iep',
+        center: [27.133292, 38.408141],
+        zoom: 11
+    });
+	
+
+
+
+
+    const slider = document.getElementById('slider');
+    const sliderValue = document.getElementById('slider-value');
+	
+
+    const slider2 = document.getElementById('slider2');
+    const sliderValue2 = document.getElementById('slider-value2');
+
+    const slider3 = document.getElementById('slider3');
+    const sliderValue3 = document.getElementById('slider-value3');
+
+    map.on('load', () => {
+        map.addSource('smyrna', {
+            'type': 'raster',
+            'url': 'mapbox://alperasinmaz.b50493nf'
+        });
+        map.addLayer({
+            'id': 'smyrna',
+            'source': 'smyrna',
+            'layout': {
+// Make the layer visible by default.
+'visibility': 'none'
+},
+            'type': 'raster'
+         
+
+
+        });
+
+        slider.addEventListener('input', (e) => {
+            // Adjust the layers opacity. layer here is arbitrary - this could
+            // be another layer name found in your style or a custom layer
+            // added on the fly using `addSource`.
+            map.setPaintProperty(
+                'smyrna',
+                'raster-opacity',
+                parseInt(e.target.value, 10) / 100
+            );
+
+            // Value indicator
+            sliderValue.textContent = e.target.value + '%';
+        });
+    });
+
+
+           map.on('load', () => {
+        map.addSource('smyrna3', {
+            'type': 'raster',
+            'url': 'mapbox://alperasinmaz.avsudzi3'
+        });
+        map.addLayer({
+            'id': 'smyrna3',
+            'source': 'smyrna3',
+            'layout': {
+// Make the layer visible by default.
+'visibility': 'none'
+},
+            'type': 'raster'
+
+
+        });
+
+
+
+
+        slider3.addEventListener('input', (e) => {
+
+            // Adjust the layers opacity. layer here is arbitrary - this could
+            // be another layer name found in your style or a custom layer
+            // added on the fly using `addSource`.
+            map.setPaintProperty(
+                'smyrna3',
+                'raster-opacity',
+                parseInt(e.target.value, 10) / 100
+            );
+
+            // Value indicator
+            sliderValue3.textContent = e.target.value + '%';
+        });
+    });
+
+    map.on('load', () => {
+        map.addSource('smyrna2', {
+            'type': 'raster',
+
+            'url': 'mapbox://alperasinmaz.anzucas0'
+        });
+        map.addLayer({
+            'id': 'smyrna2',
+            'source': 'smyrna2',
+            'layout': {
+// Make the layer visible by default.
+'visibility': 'none'
+},
+            'type': 'raster'
+        });
+
+        slider2.addEventListener('input', (e) => {
+            // Adjust the layers opacity. layer here is arbitrary - this could
+            // be another layer name found in your style or a custom layer
+            // added on the fly using `addSource`.
+            map.setPaintProperty(
+                'smyrna2',
+                'raster-opacity',
+                parseInt(e.target.value, 10) / 100
+            );
+
+            // Value indicator
+            sliderValue2.textContent = e.target.value + '%';
+        });
+    });
+ 
+ function showLayer() {
+    map.setLayoutProperty('smyrna', 'visibility', 'visible');
+    visibleTextEl.innerText = 'show'
+}
+
+function hideLayer() {
+    map.setLayoutProperty('smyrna', 'visibility', 'none');
+    visibleTextEl.innerText = 'hide'
+}
+
+  function showLayer1() {
+    map.setLayoutProperty('smyrna2', 'visibility', 'visible');
+    visibleTextEl.innerText = 'show'
+}
+
+function hideLayer1() {
+    map.setLayoutProperty('smyrna2', 'visibility', 'none');
+    visibleTextEl.innerText = 'hide'
+
+}
+
+ function showLayer2() {
+    map.setLayoutProperty('smyrna3', 'visibility', 'visible');
+    visibleTextEl.innerText = 'show'
+}
+
+function hideLayer2() {
+    map.setLayoutProperty('smyrna3', 'visibility', 'none');
+    visibleTextEl.innerText = 'hide'
+}
+</script>
+
+</body>
+</html>
